@@ -1,6 +1,6 @@
-# Documentación: Modelo de propensión para Mayorista
+# Documentación: Modelo de propensión para 
 
-A continuación describimos el proceso, versionado, fuentes y hallazgos en el desarrollo del modelo de propensión para mayorista.
+A continuación describimos el proceso, versionado, fuentes y hallazgos en el desarrollo del modelo de propensión para .
 
 ```
 |-- Introducción
@@ -32,23 +32,23 @@ A continuación describimos el proceso, versionado, fuentes y hallazgos en el de
 
 ## Introducción
 
-Este modelo busca modelar la propensión de compra para clientes de la `Banca Mayorista`, permitiendo al área comercial priorizar la gestión de los clientes enfocandose en aquellos que sean más propensos a realizar altas en productos del banco y logrando aumentar en 8% los desembolsos mensuales para la Banca Mayorista[1].
+Este modelo busca modelar la propensión de compra para clientes de la `Banca `, permitiendo al área comercial priorizar la gestión de los clientes enfocandose en aquellos que sean más propensos a realizar altas en productos del banco y logrando aumentar en 8% los desembolsos mensuales para la Banca [1].
 
-Los repositorios para el entrenamiento [Model Build](https://git-codecommit.us-east-1.amazonaws.com/v1/repos/sagemaker-sagemaker-mayorista-endpoint-p-tqi7sbliff3r-modelbuild), Despliegue  [Model Deploy](https://git-codecommit.us-east-1.amazonaws.com/v1/repos/sagemaker-sagemaker-mayorista-endpoint-p-tqi7sbliff3r-modeldeploy) y monitoreo [Model Monitor](https://git-codecommit.us-east-1.amazonaws.com/v1/repos/sagemaker-sagemaker-mayorista-endpoint-p-tqi7sbliff3r-modelmonitor) del modelo se encuentran alojados en CodeCommit y son gestionados mediante los pipelines de SageMaker. 
+Los repositorios para el entrenamiento [Model Build](https://git-codecommit.us-east-1.amazonaws.com/v1/repos/sagemaker-sagemaker--endpoint-p-tqi7sbliff3r-modelbuild), Despliegue  [Model Deploy](https://git-codecommit.us-east-1.amazonaws.com/v1/repos/sagemaker-sagemaker--endpoint-p-tqi7sbliff3r-modeldeploy) y monitoreo [Model Monitor](https://git-codecommit.us-east-1.amazonaws.com/v1/repos/sagemaker-sagemaker--endpoint-p-tqi7sbliff3r-modelmonitor) del modelo se encuentran alojados en CodeCommit y son gestionados mediante los pipelines de SageMaker. 
 
 ## Objetivo y OKR
 
-El objetivo es aumentar en 8% los desembolsos mensuales para la Banca Mayorista.
+El objetivo es aumentar en 8% los desembolsos mensuales para la Banca .
 
 ## Fuentes
 
-Se han considerado variables demográficas, variables de riesgos, saldos, principalidad y otras variables de características. Dichas variables originalmente son obtenidas mediante el área de Mayorista y cargadas a S3, pero, cuando la data se encuentre cargada al DataLake, se procede a realizar una lectura más directa de las fuentes [2].
+Se han considerado variables demográficas, variables de riesgos, saldos, principalidad y otras variables de características. Dichas variables originalmente son obtenidas mediante el área de  y cargadas a S3, pero, cuando la data se encuentre cargada al DataLake, se procede a realizar una lectura más directa de las fuentes [2].
 
 Fuentes originales recibidas en formato CSV y cargadas a S3:
 
     * [1] Tablón: Tabla con información mensual de clientes y contratos activos, tanto del pasivo como del activo, esta tabla tiene además el tipo de producto, gerente, segmento, saldo punta, saldo medio, producto bancario al cierre de cada mes.
     * [2] Clientes: Esta tabla está a nivel de cliente y tiene información del segmento del cliente y si ha presentado cambios, sector económico, fecha de ingreso, ciudad y pais, volumen del activo y del pasivo, grupo económico interno GEVC. 
-    * [3] Riesgos por cliente: Información mensual por cliente donde encontramos el estado(sujeto/No sujeto de crédito), la clasificación del sector dada por riesgos, los rating, calificaciones de riesgos (Itaú, Chile y Colombia), encontramos además los cupos otorgados para diversas, operaciones de leasing, operaciones específicas y mesa, también encontramos la clasificación WL. 
+    * [3] Riesgos por cliente: Información mensual por cliente donde encontramos el estado(sujeto/No sujeto de crédito), la clasificación del sector dada por riesgos, los rating, calificaciones de riesgos (, Chile y Colombia), encontramos además los cupos otorgados para diversas, operaciones de leasing, operaciones específicas y mesa, también encontramos la clasificación WL. 
     * [4] Sector CIFIN: Información de endeudamiento del cliente en el sector externo, esta base se registra de manera trimestral, el cliente está repetido tantas veces como deudas tenga con otras entidades. 
     * [5] CIIU: Códigos del sector económico registrados por el dane.
     * [6] Mapa productos: Base de productos, donde se relaciona si hace parte del activo/pasivo, la familia del producto y la subfamilia.
@@ -69,7 +69,7 @@ Ahora, enfocandonos en el proceso de ETL, cada tabla fue transformada mediante u
 La Escritura en Parquet de cada Glue Job  se realizó en una carpeta independiente en S3 y se creó un Crawler independiente para cada tabla, de esta manera, esta salida mapeada por el Crawler será la misma independientemente si la ETL trabaja con tablas cargadas a S3 o DataLake.
 
 ## Version 0.1
-Esta versión del modelo buscaba modelar la propensión de compra para clientes de la `Banca Mayorista` utilizando un primer grupo de variables muy generales.
+Esta versión del modelo buscaba modelar la propensión de compra para clientes de la `Banca ` utilizando un primer grupo de variables muy generales.
 
 ### Variables incorporadas
 
@@ -89,8 +89,8 @@ De cara al Pipeline de industrialización del modelo, se generaron funciones par
 
 * `read_tablon`: La función read_tablon lee usando Athena el tablón procesado por ETL.
 * `read_invoice_number`: La función read_invoice_number lee usando Athena el invoice_number procesado por ETL.
-* `read_mayorista_demografico`: La función read_mayorista_demografico lee usando Athena el ETL procesado mayorista_demografico.
-* `read_mayorista_saldo`: La función read_mayorista_saldo lee usando Athena el ETL procesado mayorista_saldo.
+* `read__demografico`: La función read__demografico lee usando Athena el ETL procesado _demografico.
+* `read__saldo`: La función read__saldo lee usando Athena el ETL procesado _saldo.
 * `merge_data`: La función merge_data combina ocho dataframes.
 * `label_creation`: La función label_creation crea una nueva columna con la etiqueta para el dataframe combinado.
 * `clean_mes_data`: La función clean_mes_data crea una nueva variable a partir de la variable fecha_data que contiene solo el año y el mes.
@@ -160,5 +160,5 @@ Esta versión del modelo obtuvo:
 Pudimos notar que cerca del 65% de los clientes tienen unicamente productos del pasivo, lo que implica que la propensión de compra es menor para este segmento y que la oportunidad de aumentar el Activo es grande al movilizae estos clientes.
 
 
-[1] OKR propuesto por la Banca Mayorista.
-[2] OKR propuesto por la Banca Mayorista.
+[1] OKR propuesto por la Banca .
+[2] OKR propuesto por la Banca .
